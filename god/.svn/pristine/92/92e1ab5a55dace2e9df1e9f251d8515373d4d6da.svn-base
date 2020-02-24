@@ -1,0 +1,43 @@
+package com.project.god.dao;
+
+import java.util.List;
+
+import com.project.god.domain.OrderDetailVO;
+import com.project.god.domain.OrderVO;
+
+/**
+ * Order DAO
+ * 주문
+ * 
+ * @author god
+ *
+ */
+
+public interface OrderDAO {
+
+	/**
+	 * 주문 정보
+	 * 
+	 * @param orderVO
+	 * @throws Exception
+	 */
+	public void orderInfo(OrderVO orderVO) throws Exception;
+	
+	/**
+	 * 주문 상세 정보
+	 * 
+	 * @param orderDetailVO
+	 * @throws Exception
+	 */
+	public void orderDetailInfo(OrderDetailVO orderDetailVO) throws Exception;
+	
+	/**
+	 * 주문 목록
+	 * 
+	 * @param orderVO
+	 * @return
+	 * @throws Exception
+	 */
+	public List<OrderVO> orderList(OrderVO orderVO) throws Exception;
+	
+}

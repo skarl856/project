@@ -1,0 +1,290 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Cart</title>
+
+<!-- contextPath -->
+<c:set var="rootPath" value="${pageContext.request.contextPath}" />
+
+<!-- rootPath bootstrap, popper, jquery, jquery-ui, summernote -->
+<%@ include file="/resources/common/rootPath-js.jsp" %>
+
+<style>
+/* 나눔고딕 글씨체 */
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+body {
+	font-size: 10pt;
+}
+#wrap {
+	width: 99vw;
+	min-width: 950px;
+	margin: 10px;
+	font-family: Nanum Gothic;
+}
+
+/* 게시판 좌측 메뉴/본문 */
+#board_main_section {
+	width: 100%;
+	height: auto;
+	background-color: purple;
+}
+
+header {
+	margin: 10px 0;
+}
+
+/* a 태그 데코레이션 제거 */
+a, a:hover {
+	color: black;
+	text-decoration: none;
+}
+
+/* 우측 본문 */
+#container {
+	float: right;
+	width: 100%;
+	min-width: 800px;
+	border-collapse: collapse;
+	padding: 0 30px 0 20px;
+	/*background-color: cyan;*/
+}
+
+/* 제목 */
+#title {
+	padding: 40px 0;
+	padding-top: 50px;
+	/*background-color: red;*/
+	font-size: 15pt;
+	text-align: center;
+}
+
+/* 부제목 */
+#subtitle {
+	float: left;
+	width: 100%;
+	height: 30px;
+	padding-top: 80px;
+	/*background-color: lightgray;*/
+	/*font-size: 15pt;*/
+	text-align: left;
+}
+
+/* 첫번째 박스 왼쪽 */
+#first_box_left {
+	float: left;
+	width: 50%;
+	height: 170px;
+	margin-top: 50px;
+	border-top: 2px solid rgb(141,141,141);
+	border-left: 1px solid rgb(141,141,141);
+	border-right: 1px solid rgb(141,141,141);
+	border-bottom: 1px solid rgb(141,141,141);
+	font-size: 12px;
+}
+
+/* 첫번째 박스 항목 */
+#first_box_left2,#first_box_left4,#first_box_left6 {
+	float: right;
+}
+
+/* 첫번째 박스 오른쪽 */
+#first_box_right {
+	float: right;
+	width: 50%;
+	height: 170px;
+	margin-top: 50px;
+	border-top: 2px solid rgb(141,141,141);
+	border-left: 1px solid rgb(141,141,141);
+	border-right: 1px solid rgb(141,141,141);
+	border-bottom: 1px solid rgb(141,141,141);
+	font-size: 12px;
+}
+
+/* 첫번째 박스 항목2 */
+#first_box_right2,#first_box_right4 {
+	float: right;
+}
+
+/* 두번째 박스 */
+#title_second_box {
+	float: left;
+	width: 100%;
+	display: flex;
+	height: 50px;
+	margin-top: 30px;
+	/*border-top: 1px solid rgb(141,141,141);
+	border-left: 1px solid rgb(141,141,141);
+	border-right: 1px solid rgb(141,141,141);*/
+	border-bottom: 1px solid rgb(141,141,141);
+}
+
+/* 게시판 항목 타이틀 */
+#board_title1,#board_title2,#board_title3,#board_title4 {
+	float: left;
+	width: 25%;
+	height: 50px;
+	padding: 40px 0;
+	border-bottom: 1px solid black;
+	text-indent: 1em;
+}
+
+/* 게시판 항목 이름 */
+
+#board_name1,#board_name2,#board_name3 {
+	float: left;
+	width: 11%;
+	height: 200px;
+	padding: 30px 0;
+	border-top: 1px solid rgb(141,141,141);
+	border-bottom: 1px solid rgb(141,141,141);
+	text-indent: 1em;
+}
+	
+/* 게시판 페이징 */
+#board_paging {
+	width: 100%; 
+	margin-top: 30px;
+	/*background-color: pink;*/
+    font-size: 10pt;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/*transform: translate(-50%, 0); */
+}
+
+/* 쿠폰 내용 설명 */
+#coupon_content {
+	height: 150px;
+	border-top: 1px solid rgb(141,141,141);
+	border-bottom: 1px solid rgb(141,141,141);
+	border-right: 1px solid rgb(141,141,141);
+	border-left: 1px solid rgb(141,141,141);
+	/*background: pink;*/
+}	
+
+[id^=second_] {
+	/*background: green;*/
+	width: 200px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	display: inline-block;
+	border: 1px solid black;
+}
+
+.on {
+	background: white;
+	border-top: 2px solid black;
+	border-bottom: 0px;
+}
+
+</style>
+</head>
+
+<body>
+
+	<!-- 게시판 시작 -->
+	<div id="wrap">
+
+
+		<!-- 게시판 우측 본문 시작 -->
+		<div id="container">
+		
+			<!-- 제목 -->
+			<div id="title">
+			<strong>MILEAGE</strong><br>
+			</div>
+			
+				<!-- 부제목 -->
+				<div id="subtitle">
+				<strong>고객님의 사용가능 적립금 금액 입니다.</strong>
+				</div>
+			
+			<!-- 게시판 전체 wrap -->
+			<div id="board_wrap">
+				
+				<!-- 첫번째 박스 왼쪽 -->
+				<div id="first_box_left">
+					<div id="first_box_left1">&nbsp;&nbsp;- 총 적립금</div><br>           
+					<div id="first_box_left2">3,000원</div><br>
+					<div id="first_box_left3">&nbsp;&nbsp;- 사용된 적립금</div><br>                
+					<div id="first_box_left4">0원</div><br>
+					<div id="first_box_left5">&nbsp;&nbsp;- 환불예정 적립금</div>
+					<div id="first_box_left6">0원</div>
+				</div>
+				
+				<!-- 첫번째 박스 오른쪽 -->
+				<div id="first_box_right">
+					<div id="first_box_right1">&nbsp;&nbsp;- 사용가능 적립금</div><br>          
+					<div id="first_box_right2">3,000원</div><br>
+					<div id="first_box_right3">&nbsp;&nbsp;- 미가용 적립금</div>               
+					<div id="first_box_right4">0원</div>
+				</div>
+				
+					<!-- 두번째 박스 -->
+					<div id="title_second_box">
+						<div id="second_box1" >적립내역보기</div>
+						<div id="second_box2"class="on">미가용적립내역보기</div>
+						<div id="second_box3">미가용쿠폰/회원등급적립내역</div>
+					</div>
+							
+						<!-- 게시판 제목 -->
+						<div id="board_title">
+							<div id="board_title1" style="text-align: left;">주문날짜</div>	
+							<div id="board_title2" style="text-align: left;">적립금</div>
+							<div id="board_title3" style="text-align: left;">관련 주문</div>
+							<div id="board_title4" style="text-align: left;">내용</div>
+						</div>
+						
+						<!-- 게시판 내용 -->
+						<div id="board_name">
+							<div id="board_name1" style="text-align: left;">2019-12-26</div>
+							<div id="board_name2" style="text-align: left;">3,000원</div>
+							<div id="board_name3" style="text-align: left;">신규회원 적립금</div>
+						</div>	
+					
+			</div>
+						<!-- //게시판 리스트 끝 -->
+						
+			<!-- 게시판 페이징 시작 -->
+			<div id="board_paging">
+				<a href="#">◀︎</a>&nbsp;
+				<a href="#">[1]</a>&nbsp;
+				<a href="#">[2]</a>&nbsp;
+				<a href="#">[3]</a>&nbsp;
+				<a href="#">[4]</a>&nbsp;
+				<a href="#">[5]</a>&nbsp;
+				<a href="#">▶︎</a>&nbsp;
+			</div><br>
+			<!-- //게시판 페이징 끝 -->
+			
+
+				<!-- 쿠폰 내용 설명 -->	
+			<div id="coupon_content">
+					<div style="border-bottom: 1px solid rgb(141,141,141);">적립금 안내</div>
+						<div style="padding-left: 20px; font-size: 9pt;">
+							<span class="badge badge-secondary">1</span>
+							주문으로 발생한 적립금은 배송완료 후 3일 부터 실제 사용 가능한 적립금으로 전환됩니다. 배송완료 시점으로부터 3일 동안은 미가용 적립금으로 분류됩니다.<br><br>
+							<span class="badge badge-secondary">2</span>
+							미가용 적립금은 반품,구매취소 등을 대비한 적립금으로 사용가능 적립금으로 전환되기까지 상품구매에 사용하실 수 없습니다.<br><br>
+							<span class="badge badge-secondary">3</span>
+							사용가능 적립금(총적립금-사용된적립금-미가용적립금)은 상품구매 시 바로 사용가능합니다.<br><br>							
+						</div>
+					</div>
+			
+			</div>	
+			<!-- //게시판 전체 wrap -->
+					
+		</div>
+		<!-- //게시판 우측 본문 끝 -->
+	
+	</div>
+	<!-- //게시판 끝 -->
+
+</body>
+</html>

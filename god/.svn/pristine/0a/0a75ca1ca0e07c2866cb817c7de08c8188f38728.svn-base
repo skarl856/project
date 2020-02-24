@@ -1,0 +1,27 @@
+package com.project.god.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+public class HomeController {
+
+	@RequestMapping("/")
+	public String home() {
+		
+		log.info("HOME");
+		
+		return "/member/home";	
+	}
+	
+	@RequestMapping("/productSearch.do")
+	public String prdSearch() {
+		
+		
+		return "member/product_search";
+	}
+	
+}

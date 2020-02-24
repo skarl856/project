@@ -1,0 +1,78 @@
+package com.project.god.dao;
+
+import java.util.List;
+
+import com.project.god.domain.OrderDetailVO;
+import com.project.god.domain.OrderVO;
+import com.project.god.domain.ProductVO;
+
+/**
+ * Order DAO
+ * 주문
+ * 
+ * @author god
+ *
+ */
+
+public interface OrderDAO {
+
+	/**
+	 * 주문 정보
+	 * 
+	 * @param orderVO
+	 * @throws Exception
+	 */
+	public void orderInfo(OrderVO orderVO) throws Exception;
+	
+	/**
+	 * 주문 상세 정보
+	 * 
+	 * @param orderDetailVO
+	 * @throws Exception
+	 */
+	public void orderDetailInfo(OrderDetailVO orderDetailVO) throws Exception;
+	
+	/**
+	 * 전체 주문목록 (이용자)
+	 * 
+	 * @param orderVO
+	 * @return
+	 * @throws Exception
+	 */
+	public List<OrderDetailVO> orderList(String memberId) throws Exception;
+	
+	/**
+	 * 전체 주문목록 (관리자)
+	 * 
+	 * @param orderVO 전체 주문조회
+	 * @return 저장오류메세지
+	 * @throws Exception 예외처리
+	 */
+	List<OrderVO> getOrderList() throws Exception;
+	
+	/**
+	 * 상세 주문조회 (관리자, 이용자)
+	 * 
+	 * @param orderId 주문 번호
+	 * @return 저장오류 메세지
+	 * @throws Exception 예외처리
+	 */
+	List<OrderDetailVO> getOrderView(String orderId) throws Exception;
+	
+	/**
+	 * 배송상태 처리
+	 * 
+	 * @param orderVO (아이디, 주문상태처리)
+	 * @throws Exception 예외처리
+	 */
+	public void delivery(OrderVO orderVO) throws Exception;
+	
+	/**
+	 * 상품 배송 중일때 해당 구매 상품 재고 감소
+	 * 
+	 * @param productVO
+	 * @throws Exception 예외처리
+	 */
+	public void productQuan(ProductVO productVO) throws Exception;
+	
+}

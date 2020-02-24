@@ -1,0 +1,62 @@
+package com.project.god.admin.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * admin order management
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/admin")
+public class AdminOrderController {
+
+	@RequestMapping("/admin_order_list.do")
+	public String orderList() {
+		
+		log.info("주문 관리");
+		
+		return "/admin/admin_order_list";
+	}
+	
+	@RequestMapping("/admin_order_detail.do")
+	public String orderListDetail() {
+		
+		log.info("주문 관리 상세");
+		
+		return "/admin/admin_order_detail";
+	}
+	
+	@RequestMapping("/admin_order_cancel.do")
+	public String boardOrderCancel() {
+		
+		log.info("게시판 주문 취소");
+		
+		return "/admin/admin_order_cancel";
+		
+	}
+	
+	@RequestMapping("/admin_order_change.do")
+	public String boardOrderChange() {
+		
+		log.info("게시판 교환/환불 ");
+		
+		return "/admin/admin_order_change";
+		
+	}
+	
+	@RequestMapping("/admin_order_change_detail.do")
+	public String boardOrderChangeDetail() {
+		
+		log.info("게시판 교환/환불 상세");
+		
+		return "/admin/admin_order_change_detail";
+		
+	}
+}

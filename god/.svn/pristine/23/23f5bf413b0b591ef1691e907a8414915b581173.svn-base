@@ -1,0 +1,15 @@
+package com.project.god.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.project.god.domain.OrderVO;
+
+public interface OrderMapper {
+	
+	List<OrderVO> getOrderList(@Param("page")int page,
+							   @Param("rowsPerPage")int rowsPerPage);
+	
+	int getOrderListCount();
+}

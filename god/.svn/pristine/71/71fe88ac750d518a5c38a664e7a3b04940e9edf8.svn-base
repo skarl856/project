@@ -1,0 +1,29 @@
+package com.project.god.admin.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * admin notice
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/admin")
+public class NoticeController {
+	
+	@RequestMapping("/admin_notice.do")
+	public String notice() {
+		
+		log.info("공지사항");
+		
+		return "/admin/admin_notice";
+		
+	}
+
+}

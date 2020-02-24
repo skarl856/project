@@ -1,0 +1,159 @@
+package com.project.god.controller;
+
+import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableSet;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.project.god.domain.CartListVO;
+import com.project.god.domain.CartVO;
+import com.project.god.domain.OrderDetailVO;
+import com.project.god.domain.OrderVO;
+import com.project.god.service.CartService;
+import com.project.god.service.OrderService;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Order
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/products")
+public class OrderController {
+
+	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
+	private CartService cartService;
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/order.do", method = RequestMethod.GET)
+	public ModelAndView order(ModelAndView mav, HttpSession session) throws Exception {
+		
+		log.info("주문 페이지");
+		
+		Map<String, Object> map = new HashMap<>();
+		NavigableSet<CartVO> cartSession = null; // 세션
+		List<CartListVO> cartList = null;
+		
+		//String memberId = authentication.getName();
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		String notMember = "anonymousUser";
+		
+		if (principal instanceof UserDetails) {
+			String memberId = ((UserDetails)principal).getUsername();
+			
+			if (memberId != notMember) {
+				
+				// cart session 가져오기
+				if(session.getAttribute("CART_SESSION")!=null) {
+					cartSession = (NavigableSet<CartVO>)session.getAttribute("CART_SESSION");
+					
+					// NavigableSet<CartVO> -> List<CartListVO> 변환
+					cartList = cartService.cartList(memberId, cartSession); //
+				}
+				int cartSumPrice = 0;
+				
+				if (cartList.isEmpty()) {
+					
+				} else {
+					cartSumPrice = cartService.cartSumPrice(memberId);
+				}
+				
+				log.info("cartList" + cartList);
+				
+				map.put("cartSumPrice", cartSumPrice);
+				map.put("cartList", cartList);
+				
+				mav.setViewName("/member/order_sheet");
+				
+				mav.addObject("map", map);
+				
+			} 
+		} else {
+			String memberId = principal.toString();
+			
+			log.info("memberId : " + memberId);
+			
+			if (memberId == notMember) {
+				
+				mav.setViewName("/member/login");
+			}
+		}
+		return mav;
+	}
+	
+	// 주문 페이지
+	@RequestMapping(value="/order_proc.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public String orderProc(HttpSession session, OrderVO orderVO, OrderDetailVO orderDetailVO) throws Exception {
+		
+		log.info("##### orderProc #####");
+		
+		log.info("orderVO : "+orderVO);
+		log.info("orderDetailVO : "+orderDetailVO);
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		String notMember = "anonymousUser";
+
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		String ym = year + new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1);
+		String ymd = ym + new DecimalFormat("00").format(cal.get(Calendar.DATE));
+		String subNum = "";
+		
+		for(int i=1; i<=6; i++) {
+			subNum += (int)(Math.random() * 10);
+		}
+		
+		String orderId = ymd + "_" + subNum;
+		
+		if (principal instanceof UserDetails) {
+			String memberId = ((UserDetails)principal).getUsername();
+			
+			if (memberId != notMember) {
+				
+				orderVO.setOrderId(orderId);
+				orderVO.setMemberId(memberId);
+				
+				orderService.orderInfo(orderVO);
+				orderService.orderDetailInfo(orderDetailVO);
+				
+				log.info("orderVO : "+orderVO);
+				log.info("orderDetailVO : "+orderDetailVO);
+				
+				cartService.deleteAllCart(memberId);
+			} 
+			
+		} else {
+			String memberId = principal.toString();
+			
+			if (memberId == notMember) {
+				
+				return "redirect:/login/login.do";
+			}
+		}
+		
+		return "/member/order_sheet";
+	}
+}

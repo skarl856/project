@@ -1,0 +1,29 @@
+package com.project.god.admin.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * admin dropout list
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/admin")
+public class DropoutListController {
+	
+	@RequestMapping("/admin_dropout_list.do")
+	public String dropout_list() {
+		
+		log.info("탈퇴회원 리스트");
+		
+		return "/admin/admin_dropout_list";
+		
+	}
+
+}

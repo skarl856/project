@@ -1,0 +1,171 @@
+SELECT *
+FROM MEMBER
+WHERE member_name = '홍길동';
+
+SELECT *
+FROM MEMBER
+WHERE member_addr = '서울 관악*';
+
+SELECT *
+FROM MEMBER
+WHERE member_email = 'user1@naver.com';
+
+INSERT INTO admin 
+VALUES ('admin123', '#Abcd1234', '홍길동', '010-1234-5678', 'abcd@abcd.com', '2');
+
+ALTER TABLE MEMBER 
+ADD agree_check NUMBER(1) DEFAULT 1;
+
+INSERT INTO faq
+VALUES ('15', 'admin_user', '자주묻는질문', '내용입니다', '0');
+
+
+------------------------------------------------------------------------------------------------
+
+-- getFaqBySearch
+SELECT * FROM (
+                    SELECT
+                           m.*,
+                           FLOOR((ROWNUM - 1)/10 + 1) page
+                    FROM (
+                             SELECT * FROM faq
+							
+							WHERE faq_title like '%' || '제목' || '%'
+							
+                            ORDER BY faq_id DESC
+                      	 ) m
+        )
+ WHERE page = 2;
+ 
+ SELECT * FROM (
+                    SELECT
+                           m.*,
+                           FLOOR((ROWNUM - 1)/10 + 1) page
+                    FROM (
+                             SELECT * FROM faq
+							
+							WHERE faq_content like '%' || '동우' || '%'
+							
+                            ORDER BY faq_id DESC
+                      	 ) m
+        )
+ WHERE page = 1;
+     	
+ 
+ SELECT * FROM (
+                    SELECT
+                           m.*,
+                           FLOOR((ROWNUM - 1)/10 + 1) page
+                    FROM (
+                             SELECT * FROM faq
+							
+							WHERE member_id like '%' || 'oracle' || '%'
+							
+                            ORDER BY faq_id DESC
+                      	 ) m
+        )
+ WHERE page = 1;
+ 
+ 
+ 
+ 
+ -- getAllFaqsBySearch
+ 
+  SELECT COUNT(*) FROM (
+                    SELECT
+                           m.*
+                           
+                    FROM (
+                             SELECT * FROM faq
+							
+							WHERE faq_title like '%' || '제목' || '%'
+							
+                            ORDER BY faq_id DESC
+                      	 ) m
+        );
+ 
+       
+       
+-- isEnableEmailByIdAndEmail
+
+       SELECT count(*)
+		  FROM (SELECT member_email
+			      FROM member
+			     WHERE member_id != 'qwer1234')
+		 WHERE member_email = 'user56@abcd.com';
+
+	
+-- isEnableCellphoneByIdAndCellphone
+		SELECT count(*)
+		  FROM (SELECT member_cellphone
+			      FROM member
+			     WHERE member_id != 'qwer1234')
+		 WHERE member_cellphone = '010-1234-1056';
+		
+		
+-- updateMember
+		UPDATE member 
+		   SET member_pw='!Qqwer1234',
+			   member_email='test1234@naver.com',
+			   member_phone='031-1234-4567',
+		   	   member_cellphone='010-2222-3333',
+			   member_zip='06362',
+			   member_addr='서울 강남구 밤고개로 76-2 (수서동)',
+			   member_addr_detail='1111',
+			   sms_check='Y',
+			   email_check='N',
+			   forever_check='Y'
+		 WHERE member_id='test1234'
+		 
+SELECT * FROM (
+                    SELECT
+                           m.*,
+                           FLOOR((ROWNUM - 1)/10 + 1) page
+                    FROM (
+                             SELECT * FROM (
+                             	
+                             	SELECT * FROM qna_product
+                             	
+                             	WHERE qna_product_date BETWEEN TO_CHAR(SYSDATE-7) AND TO_CHAR(SYSDATE+1)
+                             	
+                             )
+							
+							WHERE qna_product_title like '%' || '테스트' || '%'
+							
+                            ORDER BY qna_product_id DESC
+                      	 ) m
+        )
+     	WHERE page = 1;
+     	
+SELECT * FROM (
+	SELECT
+		m.*,
+		FLOOR((ROWNUM - 1)/10 + 1) page
+        FROM (
+        	SELECT * FROM product
+            ORDER BY product_id DESC
+        ) m
+)
+WHERE page = 1;
+
+-- 상품 검색 총 수
+SELECT COUNT(*) FROM (
+	SELECT m.* FROM (
+		SELECT * FROM product
+		WHERE product_name like '%' || '셔츠' || '%'
+        ORDER BY product_id DESC
+	) m
+);
+
+SELECT COUNT(*) FROM product;
+
+SELECT (SELECT NVL(MAX(faq_id),151) FROM faq WHERE faq_id < 151),
+		   (SELECT NVL(MIN(faq_id),151) FROM faq WHERE faq_id > 151)
+	FROM dual;
+
+SELECT (SELECT NVL(MAX(qna_product_id),5) 
+		  FROM qna_product 
+		 WHERE qna_product_id < 5  AND qna_product_re_lev = 0)
+  FROM dual;
+
+    

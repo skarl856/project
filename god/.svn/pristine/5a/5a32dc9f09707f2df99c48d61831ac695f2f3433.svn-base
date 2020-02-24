@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.god.mapper.OrderMapper">
+
+	<!-- 주문 정보 -->
+	<insert id="orderInfo">
+		INSERT INTO orders 
+			   ( order_id, 
+				 member_id, 
+				 order_name, 
+				 order_zip, 
+				 order_addr, 
+				 order_addr_detail, 
+				 order_phone, 
+				 order_cellphone, 
+				 order_msg, 
+				 order_amount )
+		VALUES ( #{orderId},
+				 #{memberId},
+				 #{orderName},
+				 #{orderZip},
+				 #{orderAddr},
+				 #{orderAddrDetail},
+				 #{orderPhone},
+				 #{orderCellphone},
+				 #{orderMsg},
+				 #{orderAmount} )
+	</insert>	
+	
+	<!-- 주문 상세 정보 -->
+	<insert id="orderDetailInfo">
+		INSERT INTO order_detail 
+			   ( order_detail_id, 
+				 order_id, 
+				 product_id, 
+				 cart_quan,
+				 cart_color,
+				 cart_size )
+		SELECT order_detail_seq.NEXTVAL,
+			   #{orderId},
+			   #{productId},
+			   #{cartQuan},
+			   #{cartColor},
+			   #{cartSize}
+		  FROM cart
+	</insert>	
+
+	<!-- 카트 삭제하기 -->
+	<!-- <delete id="cartAllDelete">
+		DELETE cart
+		 WHERE member_id = #{memberId}
+	</delete> -->
+	
+	<!-- 특정 유저의 주문 목록 -->
+	<select id="orderList" resultType="com.project.god.domain.OrderVO">
+		SELECT
+			order_id, 
+			member_id, 
+			order_name, 
+			order_zip, 
+			order_addr, 
+			order_addr_detail, 
+			order_phone, 
+			order_cellphone, 
+			order_msg, 
+			order_amount, 
+			order_date
+			order_delivery
+		  FROM order
+		 WHERE member_id = #{memberId}
+	</select>
+
+</mapper>

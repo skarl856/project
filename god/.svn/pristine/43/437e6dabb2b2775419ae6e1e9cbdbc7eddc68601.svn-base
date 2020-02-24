@@ -1,0 +1,29 @@
+package com.project.god.admin.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * admin dropout reason
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/admin")
+public class DropoutReasonController {
+	
+	@RequestMapping("/admin_dropout_reason.do")
+	public String dropout_reason() {
+		
+		log.info("탈퇴사유");
+		
+		return "/admin/admin_dropout_reason";
+		
+	}
+
+}

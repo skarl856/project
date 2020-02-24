@@ -1,0 +1,32 @@
+package com.project.god.domain;
+
+import java.sql.Date;
+
+import lombok.Data;
+
+/**
+ * Cart VO
+ * 
+ * @author god
+ *
+ */
+
+@Data
+public class CartVO {
+
+	/** 장바구니 번호 */
+	private int cartId;
+	/** 회원 아이디 */
+	private String memberId;
+	/** 상품 번호 */
+	private int productId;
+	/** 수량 */
+	private int cartQuan;
+	/** 등록일 */
+	private Date cartDate;
+	/** 상품 색상 */
+	private String cartColor;
+	/** 상품 사이즈 */
+	private String cartSize;
+	
+}

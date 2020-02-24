@@ -1,0 +1,45 @@
+package com.project.god.admin.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.project.god.service.CategoryService;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * admin category
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/admin")
+public class CategoryController {
+	
+	@Autowired
+	private CategoryService categoryService;
+	
+	@RequestMapping("/admin_category.do")
+	public String category(Model model) {
+		
+		log.info("카테고리 관리");
+		
+		// 카테고리 정보 생성
+		model.addAttribute("cateList100", categoryService.getAllCates("100"));
+		model.addAttribute("cateList200", categoryService.getAllCates("200"));
+		model.addAttribute("cateList300", categoryService.getAllCates("300"));
+		model.addAttribute("cateList400", categoryService.getAllCates("400"));
+		model.addAttribute("cateList500", categoryService.getAllCates("500"));
+		model.addAttribute("cateList600", categoryService.getAllCates("600"));
+		model.addAttribute("cateList700", categoryService.getAllCates("700"));
+		
+		return "/admin/admin_category";
+		
+	}
+
+}

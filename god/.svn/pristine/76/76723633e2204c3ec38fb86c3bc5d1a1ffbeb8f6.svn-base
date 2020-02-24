@@ -1,0 +1,57 @@
+package com.project.god.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.project.god.domain.OrderDetailVO;
+import com.project.god.domain.OrderVO;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Order DAOImpl
+ * 주문 DAO 구현 클래스
+ * 
+ * @author god
+ *
+ */
+
+@Repository
+@Slf4j
+public class OrderDAOImpl implements OrderDAO {
+
+	@Autowired
+	private SqlSession sqlSession;
+	
+	// 주문 정보
+	@Override
+	public void orderInfo(OrderVO orderVO) throws Exception {
+
+		log.info("OrderDAO.orderInfo");
+		
+		sqlSession.insert("com.project.god.mapper.OrderMapper.orderInfo", orderVO);
+	}
+	
+	// 주문 상세 정보
+	@Override
+	public void orderDetailInfo(OrderDetailVO orderDetailVO) throws Exception {
+		
+		log.info("OrderDAO.orderDetailInfo");
+		
+		sqlSession.insert("com.project.god.mapper.OrderMapper.orderDetailInfo", orderDetailVO);
+		
+	}
+
+	// 주문 목록
+	@Override
+	public List<OrderVO> orderList(OrderVO orderVO) throws Exception {
+
+		log.info("OrderDAO.orderList");
+		
+		return sqlSession.selectOne("com.project.god.mapper.OrderMapper.orderList", orderVO);
+	}
+
+}

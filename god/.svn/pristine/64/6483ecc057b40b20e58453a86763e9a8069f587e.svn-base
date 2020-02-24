@@ -1,0 +1,29 @@
+package com.project.god.board.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * CREDIT ETC DETAIL
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/board")
+public class CreditEtcDetailController {
+	
+	@RequestMapping("/credit_etc_detail.do")
+	public String credit_etc_detail() {
+		
+		log.info("입금/기타 문의 상세보기");
+		
+		return "/member/credit_etc_detail";
+		
+	}
+
+}

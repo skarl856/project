@@ -1,0 +1,17 @@
+package com.project.god.domain;
+
+import java.util.List;
+
+/**
+ * Admin Mapper
+ * 
+ * @author god
+ *
+ */
+
+public interface AdminMapper {
+	
+	List<Admin> getAdminList();
+	Admin getAdmin(int adminId);
+	
+}

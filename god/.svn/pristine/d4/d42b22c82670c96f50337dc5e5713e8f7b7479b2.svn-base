@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.god.mapper.ProductMapper">
+
+	<!-- 게시글 쓰기 -->
+	<insert id="regiProduct" parameterType="ProductVO">
+		<![CDATA[
+			INSERT INTO product
+				VALUES (
+					#{productId},
+				    #{productName},
+				    #{cateName},
+				    #{productPrice1},
+				    #{productPrice2},
+				    #{productImg},
+				    #{productListImg},
+				    #{productContent},
+				    #{productColor},
+				    #{productSize},
+				    #{productQuan},
+				    SYSDATE,
+				    #{productInfo},
+				    #{productReadCount},
+				    #{productDeliveryFee})
+		]]>
+	</insert>
+
+	<!-- 게시글 마지막 시퀀스 번호  -->
+	<select id="getProductNumByLastSeq" resultType="int">
+		SELECT product_seq.NEXTVAL FROM dual
+	</select>
+	
+	<!-- 상품 전체 목록 -->
+	<select id="getProductList" resultType="ProductVO">
+	SELECT * FROM (
+		SELECT
+			m.*,
+			FLOOR((ROWNUM - 1)/#{rowsPerPage} + 1) page
+	        FROM (
+	        	SELECT * FROM product
+	            ORDER BY product_id DESC
+	        ) m
+	)
+	WHERE page = #{page}
+	</select>
+	
+	<!-- 상품 개별 조회 -->
+	<select id="getProduct" resultType="ProductVO">
+	SELECT * FROM product
+	WHERE product_id = #{productId}
+	</select>
+	
+	<!-- 전체 게시글 수 -->
+	<select id="getProductListCount" resultType="int">
+	SELECT COUNT(*) FROM product
+	</select>
+	
+	<!-- 상품 "검색" 조회 -->
+	<select id="getProductBySearch" resultType="ProductVO">
+	SELECT * FROM (
+		SELECT m.*, FLOOR((ROWNUM - 1)/#{rowsPerPage} + 1) page
+	    FROM (
+	    	SELECT * FROM product
+			<if test="searchKind=='상품명'">
+			WHERE product_name like '%' || #{searchWord} || '%'
+			</if>
+	        <if test="searchKind=='카테고리명'">
+	        WHERE cart_name like '%' || #{searchWord} || '%'
+	        </if>
+	        ORDER BY product_id DESC
+		) m
+	)
+	WHERE page = #{page}
+	</select>
+	
+	<!-- 상품 "전체 검색" 조회수 -->
+	<select id="getAllProductsBySearch" resultType="int">
+	SELECT COUNT(*) FROM (
+		SELECT m.* FROM (
+			SELECT * FROM product
+			<if test="searchKind=='상품명'">
+			WHERE product_name like '%' || #{searchWord} || '%'
+			</if>
+	        <if test="searchKind=='카테고리명'">
+	        WHERE cart_name like '%' || #{searchWord} || '%'
+	        </if>
+	        ORDER BY product_id DESC
+		) m
+	)
+	</select>
+	
+	<!-- 카트담기 -->
+	<insert id="addCart">
+	INSERT INTO cart (cart_id, member_id, product_id, cart_quan)
+	VALUES (cart_seq.NEXTVAL, #{memberId}, #{productId}, #{cartQuan})
+	</insert>
+	
+	<!-- 카테고리 목록 -->
+	<select id="getCategoryList" resultType="CategoryVO">
+	SELECT cate_lev, cate_name, cate_code, cate_ref 
+	FROM category
+	START WITH cate_ref IS NULL CONNECT BY PRIOR cate_code = cate_ref
+	</select>
+	
+	<!-- 카테고리 추가 -->
+	<insert id="insertCategory" parameterType="com.project.god.domain.ProductVO">
+	INSERT INTO category
+	VALUES (#{cate_name})
+	</insert>
+	
+	<!-- 카테고리 삭제 -->
+	<delete id="deleteCategory" parameterType="com.project.god.domain.ProductVO">
+	DELETE FROM category
+	 WHERE product_kind2=#{productKind2}
+	</delete>
+
+</mapper>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.god.mapper.ProductMapper">
+
+	<!-- 게시글 쓰기 -->
+	<insert id="regiProduct" parameterType="ProductVO">
+		<![CDATA[
+			INSERT INTO product (
+				product_id,
+				product_name,
+				product_price1,
+				product_price2,
+				product_img,
+				product_thum_img,
+				product_list_img,
+				product_content,
+				product_color,
+				product_size,
+				product_quan,
+				product_date,
+				product_info,
+				product_read_count,
+				product_delivery_fee,
+				cate_code
+			)
+			
+				VALUES (
+					product_seq.NEXTVAL,
+				    #{productName},
+				    #{productPrice1},
+				    #{productPrice2},
+				    #{productImg},
+				    #{productThumImg},
+				    #{productListImg},
+				    #{productContent},
+				    #{productColor},
+				    #{productSize},
+				    #{productQuan},
+				    SYSDATE,
+				    #{productInfo},
+				    #{productReadCount},
+				    #{productDeliveryFee},
+				    #{cateCode})
+		]]>
+	</insert>
+
+	<!-- 게시글 마지막 시퀀스 번호  -->
+	<select id="getProductNumByLastSeq" resultType="int">
+		SELECT product_seq.NEXTVAL FROM dual
+	</select>
+	
+	<!-- 상품 전체 목록(페이징) -->
+	<select id="getProductList" resultType="ProductVO">
+		SELECT * FROM (
+			SELECT
+				m.*,
+				FLOOR((ROWNUM - 1)/#{rowsPerPage} + 1) page
+	          FROM (
+		        	SELECT * 
+		        	  FROM product
+		             ORDER BY product_id DESC
+		        ) m
+		)
+		WHERE page = #{page}
+	</select>
+	
+	<!-- 상품 개별 조회 -->
+	<select id="getProduct" resultType="ProductVO">
+	SELECT * FROM product
+	WHERE product_id = #{productId}
+	</select>
+	
+	<!-- 전체 게시글 수 -->
+	<select id="getProductListCount" resultType="int">
+		SELECT COUNT(*) 
+		  FROM product
+	</select>
+	
+	<!-- 카테고리별 전체 게시글 수 -->
+	<select id="getCateProductListCount" resultType="int">
+		SELECT COUNT(*) 
+		  FROM product
+		 WHERE cate_code = #{cateCode}
+	</select>
+	
+	<!-- 상품 "검색" 조회 -->
+	<select id="getProductBySearch" resultType="ProductVO">
+		SELECT * FROM (
+			SELECT m.*, FLOOR((ROWNUM - 1)/#{rowsPerPage} + 1) page
+		    FROM (
+		    	SELECT * FROM product
+				<if test="searchKind=='상품명'">
+				WHERE product_name like '%' || #{searchWord} || '%'
+				</if>
+		        <if test="searchKind=='카테고리명'">
+		        WHERE cart_name like '%' || #{searchWord} || '%'
+		        </if>
+		        ORDER BY product_id DESC
+			) m
+		)
+		WHERE page = #{page}
+	</select>
+	
+	<!-- 상품 "전체 검색" 조회수 -->
+	<select id="getAllProductsBySearch" resultType="int">
+		SELECT COUNT(*) FROM (
+			SELECT m.* FROM (
+				SELECT * FROM product
+				<if test="searchKind=='상품명'">
+				WHERE product_name like '%' || #{searchWord} || '%'
+				</if>
+		        <if test="searchKind=='카테고리명'">
+		        WHERE cart_name like '%' || #{searchWord} || '%'
+		        </if>
+		        ORDER BY product_id DESC
+			) m
+		)
+	</select>
+	
+	<!-- 카테고리 목록 -->
+	<select id="getCategoryList" resultType="CategoryVO">
+		SELECT cate_lev, cate_name, cate_code, cate_ref 
+		  FROM category
+		START WITH cate_ref IS NULL CONNECT BY PRIOR cate_code = cate_ref
+	</select>
+	
+	<!-- 카테고리 추가 -->
+	<insert id="insertCategory" parameterType="com.project.god.domain.ProductVO">
+		INSERT INTO category
+		VALUES (#{cateName})
+	</insert>
+	
+	<!-- 카테고리 삭제 -->
+	<delete id="deleteCategory" parameterType="com.project.god.domain.ProductVO">
+		DELETE FROM category
+		 WHERE cate_name=#{cateName}
+	</delete>
+	
+	<!-- 카테고리별 상품 리스트 -->
+	<select id="getCateProductList" resultType="ProductVO">
+		SELECT * FROM (
+                    SELECT
+                           m.*,
+                           FLOOR((ROWNUM - 1)/#{rowsPerPage} + 1) page
+                    FROM (
+                             SELECT 
+								p.product_id, p.product_name, c.cate_code, c.cate_name,
+								p.product_price2, p.product_list_img, p.product_color 
+							  FROM product p
+									INNER JOIN category c
+											ON p.cate_code = c.cate_code
+							 WHERE c.cate_code = #{cateCode}
+							 ORDER BY product_id DESC 
+                      	 ) m
+        )
+     	WHERE page = #{page}
+	</select>
+
+</mapper>

@@ -1,0 +1,28 @@
+package com.project.god.domain;
+
+import lombok.Data;
+
+/**
+ * Admin VO
+ * 
+ * @author god
+ *
+ */
+
+@Data
+public class Admin {
+
+	/** 관리자 ID */
+	private String adminId;
+	/** 관리자 PW */
+	private String adminPw;
+	/** 관리자 이름 */
+	private String adminName;
+	/** 관리자 연락처 */
+	private String adminCellphone;
+	/** 관리자 이메일 */
+	private String adminEmail;
+	/** 관리자 등급 */
+	private String adminClass;
+	
+}

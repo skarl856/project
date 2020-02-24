@@ -1,0 +1,18 @@
+package com.project.god.domain;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class CategoryVO {
+	
+	private String cateName;
+	
+	private String cateCode;
+	
+	private String cateRef;
+	
+	private int cateLev;
+
+}

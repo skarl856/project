@@ -1,0 +1,11 @@
+package com.project.god.mapper;
+
+import java.util.List;
+
+import com.project.god.domain.CategoryVO;
+
+public interface CateMapper {
+
+	List<CategoryVO> getAllCates(String cateCode);
+	
+}

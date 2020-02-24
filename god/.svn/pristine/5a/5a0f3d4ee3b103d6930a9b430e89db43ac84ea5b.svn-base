@@ -1,0 +1,91 @@
+package com.project.god.member.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.project.god.domain.CustomUser;
+import com.project.god.domain.MemberVO;
+import com.project.god.service.MemberService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+@RequestMapping("/member")
+public class FindController {
+	
+	@Autowired
+	private MemberService memberService;
+	
+	@RequestMapping("/find_id.do")
+	public String findId() {
+		
+		
+		return "/member/find_id";
+	}
+	
+	@RequestMapping("/find_id_proc.do")
+	public String findIdProc(@RequestParam("memberName")String memberName,
+							 @RequestParam("memberEmail") String memberEmail,
+							 @RequestParam("memberCellphone")String memberCellphone,
+							 Model model) throws Exception {
+		
+		log.info("#########회원 아이디 찾기");
+		//검색 필드/값 선정 
+		
+		String searchField = "";
+		String searchValue = "";
+		MemberVO memberVO = null;
+		
+		searchField = memberEmail.contentEquals("")? "memberCellphone" : "memberEmail";
+		searchValue = searchField.contentEquals("memberCellphone")? memberCellphone: memberEmail; 
+			
+		log.info("###### searchField:"+searchField+"#####");
+		log.info("###### searchValue:"+searchValue+"#####");
+		
+		memberVO = memberService.getMemberIdByInfo(memberName, searchField, searchValue);
+		
+		model.addAttribute("memberVO", memberVO);
+		
+		return "/member/find_result";
+	}
+	
+	
+	@RequestMapping("/find_pw.do") 
+	public String findPw() { 
+		
+		return "/member/find_pw"; 
+	}
+	 
+	@RequestMapping("/find_pw_proc.do")
+	public String findPwProc(@RequestParam("memberId")String memberId,
+							 @RequestParam("memberName")String memberName,
+			 				 @RequestParam("memberEmail")String memberEmail,
+			 				 @RequestParam("memberCellphone")String memberCellphone,
+			 				 Model model) throws Exception {
+		
+		log.info("#########회원 패쓰워드 찾기");
+		
+		String searchField = "";
+		String searchValue = "";
+		
+		searchField = memberEmail.contentEquals("")? "memberCellphone" : "memberEmail";
+		searchValue = searchField.contentEquals("memberCellphone")? memberCellphone: memberEmail; 
+			
+		log.info("###### searchField:"+searchField+"#####");
+		log.info("###### searchValue:"+searchValue+"#####");
+		
+		memberService.getMemberPwByInfo(memberId, memberName, searchField, searchValue);
+		
+		return "/member/find_pwUpdate";
+	}
+	
+}

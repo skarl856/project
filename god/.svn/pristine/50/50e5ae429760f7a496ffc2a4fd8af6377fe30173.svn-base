@@ -1,0 +1,51 @@
+package com.project.god.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.project.god.domain.Admin;
+import com.project.god.domain.AdminMapper;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Admin DAOImpl
+ * 
+ * @author god
+ *
+ */
+
+@Repository
+@Slf4j
+public class AdminDAOImpl implements AdminDAO {
+
+	@Autowired
+	private SqlSession sqlSession;
+	
+	@Override
+	public List<Admin> getAdminList() {
+
+		log.info("");
+        List<Admin> result = new ArrayList<Admin>();
+        AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+        result = adminMapper.getAdminList();
+     	
+		return result;
+	}
+
+	@Override
+	public Admin getAdmin(int adminId) {
+		
+        return sqlSession.getMapper(AdminMapper.class)
+                .getAdmin(adminId);
+
+        /*return sqlSession.selectOne("EmployeesMapper.getAdmin",
+                           employeeId);*/
+		
+	}//
+
+}

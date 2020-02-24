@@ -1,0 +1,26 @@
+package com.project.god.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+@RequestMapping("/products")
+public class ProductsController {
+	
+	@RequestMapping("/outer.do")
+	public String Products() {
+		
+		return "/member/products";
+	}
+	
+	@RequestMapping("/product_detail.do")
+	public String ProductDetail() {
+		
+		
+		
+		return "/member/product_detail";
+	}
+}

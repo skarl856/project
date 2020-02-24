@@ -1,0 +1,22 @@
+package com.project.god.domain;
+
+import lombok.Data;
+
+/**
+ * OrderDetail VO
+ * 
+ * @author god
+ *
+ */
+
+@Data
+public class OrderDetailVO {
+
+	/** 주문상세번호 */
+	private int orderDetailId;
+	/** 주문 수량 */
+	private int orderQuan;
+	/** 처리 여부 */
+	private String orderCheck;
+	
+}

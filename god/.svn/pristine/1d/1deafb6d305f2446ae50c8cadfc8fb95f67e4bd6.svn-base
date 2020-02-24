@@ -1,0 +1,29 @@
+package com.project.god.board.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * DELIVER REFUND
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/board")
+public class DeliverRefundController {
+	
+	@RequestMapping("/deliver_refund.do")
+	public String deliver_refund() {
+		
+		log.info("배송 후 교환/반품");
+		
+		return "/member/deliver_refund";
+		
+	}
+
+}

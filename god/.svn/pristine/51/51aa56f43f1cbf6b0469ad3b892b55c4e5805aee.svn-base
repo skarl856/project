@@ -1,0 +1,57 @@
+package com.project.god.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.project.god.dao.OrderDAO;
+import com.project.god.domain.OrderDetailVO;
+import com.project.god.domain.OrderVO;
+import com.project.god.service.OrderService;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Order ServiceImpl
+ * 주문 서비스 구현 클래스
+ * 
+ * @author god
+ *
+ */
+
+@Service
+@Slf4j
+public class OrderServiceImpl implements OrderService {
+
+	@Autowired
+	private OrderDAO orderDAO;
+	
+	// 주문 정보
+	@Override
+	public void orderInfo(OrderVO orderVO) throws Exception {
+
+		log.info("service orderInfo");
+		
+		orderDAO.orderInfo(orderVO);
+	}
+
+	// 주문 상세 정보
+	@Override
+	public void orderDetailInfo(OrderDetailVO orderDetailVO) throws Exception {
+
+		log.info("service orderDetailInfo");
+		
+		orderDAO.orderDetailInfo(orderDetailVO);
+	}
+
+	// 주문 목록
+	@Override
+	public List<OrderVO> orderList(OrderVO orderVO) throws Exception {
+
+		log.info("service orderList");
+		
+		return orderDAO.orderList(orderVO);
+	}
+
+}

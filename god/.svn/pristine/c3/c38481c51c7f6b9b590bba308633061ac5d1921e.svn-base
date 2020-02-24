@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.god.domain.AdminMapper">
+ 
+	<resultMap type="Admin" id="adminResult">
+		<result property="adminId" column="ADMIN_ID" />
+		<result property="adminPw" column="ADMIN_PW" />
+		<result property="adminName" column="ADMIN_NAME" />
+		<result property="adminCellphone" column="ADMIN_CELLPHONE" />
+		<result property="adminEmail" column="ADMIN_EMAIL" />
+		<result property="adminClass" column="ADMIN_CLASS" />	
+	</resultMap>
+
+	 <!-- 
+	<select id="user" resultType="String">
+		SELECT sysdate 
+		FROM dual
+	</select>
+	-->
+	 
+	<select id="getAdminList" resultMap="adminResult">
+		SELECT * 
+		FROM MEMBER 
+		ORDER BY MEMBER_ID
+	</select>
+	 
+	<select id="getAdmin" 
+			parameterType="int" 
+			resultMap="adminResult">
+		SELECT * 
+		FROM admin 
+		WHERE admin_id = #{adminId}		 
+	</select>
+
+</mapper>

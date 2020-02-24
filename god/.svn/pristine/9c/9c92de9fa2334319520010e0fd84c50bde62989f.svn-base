@@ -1,0 +1,29 @@
+package com.project.god.admin.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * admin web improve
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/admin")
+public class WebImproveController {
+	
+	@RequestMapping("/admin_web_improve.do")
+	public String web_improve() {
+		
+		log.info("웹 사이트 개선");
+		
+		return "/admin/admin_web_improve";
+		
+	}
+
+}

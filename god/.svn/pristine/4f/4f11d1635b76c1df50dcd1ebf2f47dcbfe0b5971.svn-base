@@ -1,0 +1,28 @@
+package com.project.god.board.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * user board write
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/board")
+public class BoardWriteController {
+	
+	@RequestMapping("/board_write.do")
+	public String boardWrite() {
+		
+		log.info("이용자 게시판 글쓰기");
+		
+		return "/member/board_write";
+	}
+
+}	

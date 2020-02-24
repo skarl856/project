@@ -1,0 +1,29 @@
+package com.project.god.board.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * LEVEL UP
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/board")
+public class LevelUpController {
+	
+	@RequestMapping("/levelup.do")
+	public String levelup() {
+		
+		log.info("등업신청");
+		
+		return "/member/levelup";
+		
+	}
+
+}

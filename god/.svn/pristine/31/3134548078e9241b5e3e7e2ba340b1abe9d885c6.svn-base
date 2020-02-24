@@ -1,0 +1,42 @@
+package com.project.god.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.project.god.dao.AdminDAO;
+import com.project.god.domain.Admin;
+import com.project.god.service.AdminService;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Admin ServiceImpl
+ * 
+ * @author god
+ *
+ */
+
+@Service
+public class AdminServiceImpl implements AdminService {
+
+	@Autowired
+	private AdminDAO dao;
+	
+	
+	@Transactional(readOnly = true)
+	@Override
+	public List<Admin> getAdminList() {
+		
+		return dao.getAdminList();
+	}
+
+	@Override
+	public Admin getAdmin(int AdminId) {
+
+		return dao.getAdmin(AdminId);
+	}
+
+}

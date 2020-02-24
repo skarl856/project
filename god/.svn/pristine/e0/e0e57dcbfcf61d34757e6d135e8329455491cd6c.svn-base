@@ -1,0 +1,105 @@
+package com.project.god.service;
+
+import java.util.List;
+
+import com.project.god.domain.CategoryVO;
+import com.project.god.domain.ProductVO;
+
+/**
+ * Product Service
+ * 상품 관리 서비스
+ * 
+ * @author god
+ *
+ */
+
+public interface ProductService {
+
+	/**
+	 * 상품등록 Product
+	 * 
+	 * @param productVO 객체
+	 * @return 상품등록 페이지
+	 * @throws Exception 예외처리
+	 * 
+	 */
+	public void regiProduct(ProductVO productVO) throws Exception;
+	
+	/**
+	 * Product 상품등록 마지막 Seq
+	 * 
+	 * @return 전체 게시판
+	 */
+	int getProductIdByLastSeq();
+	
+	/**
+	 * Product List
+	 * 
+	 * @return 상품 목록
+	 * 
+	 */
+	List<ProductVO> getProductList(int page, int rowsPerPage);
+	
+	/**
+	 * 상품 목록 수 조회
+	 * 
+	 * @return 상품 목록 수
+	 * 
+	 */
+	int getProductListCount();
+	
+	/**
+	 * 검색/페이징을 이용한 상품 조회
+	 * 
+	 * @param searchKind 검색종류
+	 * @param searchWord 검색단어
+	 * @param page 페이지
+     * @param rowsPerPage 페이지 당 행수
+	 * @param isLike 유사 검색(Like) 여부 usage) 유사 검색 : true, 동등 검색 : false
+	 * @return 검색 결과 상품 객체
+	 * 
+	 */
+	List<ProductVO> getProductBySearch(String searchKind, 
+							   	   String searchWord, 
+							   	   int rowsPerPage,
+							   	   int page);
+	
+	/**
+	 * 검색/페이징을 이용한 전체 상품 조회수
+	 * 
+	 * @param searchKind 검색종류
+	 * @param searchWord 검색단어
+	 * @param isLike 유사 검색(Like) 여부 usage) 유사 검색 : true, 동등 검색 : false
+	 * @return 검색 결과 전체 상품 수
+	 * 
+	 */
+	int getAllProductsBySearch(String searchKind, 
+						   	   String searchWord);
+	
+	/**
+	 * Category List
+	 * 
+	 * @return 카테고리 목록
+	 * 
+	 */
+	public List<CategoryVO> getCategoryList() throws Exception;
+	
+	/**
+	 * 카테고리 등록
+	 * 
+	 * @param productVO
+	 * 
+	 */
+	boolean insertCategory(ProductVO productVO);
+	
+	/**
+	 * 카테고리 삭제
+	 * 
+	 * @param productKind2 2차카테고리
+	 * @return 삭제 레코드
+	 * @exception 예외처리
+     * 
+     */
+	public void deleteCategory(String productKind2) throws Exception;
+	
+}

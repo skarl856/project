@@ -1,0 +1,19 @@
+package com.project.god.service;
+
+import java.util.List;
+
+import com.project.god.domain.Admin;
+
+/**
+ * Admin Service
+ * 
+ * @author god
+ *
+ */
+
+public interface AdminService {
+    
+	List<Admin> getAdminList();
+    Admin getAdmin(int AdminId);
+    
+}

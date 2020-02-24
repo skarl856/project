@@ -1,0 +1,13 @@
+package com.project.god.domain;
+
+import lombok.Data;
+
+@Data
+public class PreNextVO {
+	
+	/** 이전글 */
+	private int preId;
+	/** 다음글 */
+	private int nextId;
+
+}

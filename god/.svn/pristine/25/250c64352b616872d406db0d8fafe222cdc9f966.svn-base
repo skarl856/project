@@ -1,0 +1,59 @@
+package com.project.god.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+
+import com.project.god.dao.CategoryDAO;
+import com.project.god.domain.CategoryVO;
+import com.project.god.service.CategoryService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@Slf4j
+public class CategoryServiceImpl implements CategoryService {
+	
+	@Autowired
+	private CategoryDAO categoryDAO;
+	
+	@Autowired
+    private DataSourceTransactionManager transactionManager;
+	
+	/**
+	 * 카테고리 리스트
+	 * 
+	 * @param CategoryVO 카테고리 객체
+	 * @return 카테고리 리스트
+	 * 
+	 */
+	@Override
+	@Transactional(readOnly=true)
+	public List<CategoryVO> getAllCates(String cateCode) {
+		
+		log.info("service getAllCates");
+		
+		TransactionDefinition def = new DefaultTransactionDefinition();
+		TransactionStatus status = transactionManager.getTransaction(def);
+		
+		List<CategoryVO> list = null;
+		
+		try {
+			list = categoryDAO.getAllCates(cateCode);
+			transactionManager.commit(status);
+				
+		} catch(Exception e) {
+			transactionManager.rollback(status);
+	        log.error("Service getAllCates Exception : " + e.getMessage());
+		}
+		
+		return list;
+	}
+
+}

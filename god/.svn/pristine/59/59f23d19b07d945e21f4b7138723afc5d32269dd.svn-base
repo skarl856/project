@@ -1,0 +1,29 @@
+package com.project.god.admin.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * admin category view
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/admin")
+public class CategoryViewController {
+	
+	@RequestMapping("/admin_category_view.do")
+	public String category_view() {
+		
+		log.info("카테고리 조회수");
+		
+		return "/admin/admin_category_view";
+		
+	}
+
+}

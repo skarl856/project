@@ -1,0 +1,74 @@
+package com.project.god.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.project.god.domain.CartListVO;
+import com.project.god.domain.CartVO;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Repository
+@Slf4j
+public class CartDAOImpl implements CartDAO {
+	
+	@Autowired
+	private SqlSession sqlSession;
+	
+	// 카트에 담기
+	@Override
+	public void addCart(CartVO cartVO) {
+		
+		log.info("dao addCart");
+		
+		sqlSession.insert("com.project.god.mapper.CartMapper.addCart", cartVO);
+	}
+
+	// 카트 리스트
+	@Override
+	public List<CartListVO> cartList(String memberId) throws Exception {
+		
+		log.info("dao cartList");
+		
+		return sqlSession.selectList("com.project.god.mapper.CartMapper.cartList", memberId);
+	}
+	
+	// 카트 삭제
+	@Override
+	public void deleteCart(int cartId) throws Exception {
+		
+		log.info("dao deleteCart");
+		
+		sqlSession.delete("com.project.god.mapper.CartMapper.deleteCart", cartId);
+	}
+	
+	// 카트 비우기
+	@Override
+	public void deleteAllCart(String memberId) throws Exception {
+		
+		log.info("dao deleteAllCart");
+		
+		sqlSession.delete("com.project.god.mapper.CartMapper.deleteAllCart", memberId);
+	}
+	
+	// 카트 수정
+	@Override
+	public void updateCart(CartVO cartVO) throws Exception {
+		
+		log.info("dao updateCart");
+		
+		sqlSession.update("com.project.god.mapper.CartMapper.updateCart", cartVO);
+	}
+	
+	// 카트 금액 합계
+	@Override
+	public int cartSumPrice(String memberId) {
+		
+		log.info("dao cartSumPrice");
+		
+		return sqlSession.selectOne("com.project.god.mapper.CartMapper.cartSumPrice", memberId);
+	}
+}

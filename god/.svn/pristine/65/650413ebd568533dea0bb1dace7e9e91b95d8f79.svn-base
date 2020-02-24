@@ -1,0 +1,28 @@
+package com.project.god.domain;
+
+import lombok.Data;
+
+/**
+ * OrderDetail VO
+ * 
+ * @author god
+ *
+ */
+
+@Data
+public class OrderDetailVO {
+
+	/** 주문상세번호 */
+	private int orderDetailId;
+	/** 주문번호 */
+	private int orderId;
+	/** 상품번호 */
+	private int productId;
+	/** 주문 색상 */
+	private String cartColor;
+	/** 주문 사이즈 */
+	private String cartSize;
+	/** 주문 수량 */
+	private int cartQuan;
+	
+}

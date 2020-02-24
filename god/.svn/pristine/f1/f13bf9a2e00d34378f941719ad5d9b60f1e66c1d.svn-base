@@ -1,0 +1,29 @@
+package com.project.god.board.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * DELIVER DETAIL
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/board")
+public class DeliverDetailController {
+	
+	@RequestMapping("/deliver_detail.do")
+	public String deliver_detail() {
+		
+		log.info("배송문의 상세보기");
+		
+		return "/member/deliver_detail";
+		
+	}
+
+}

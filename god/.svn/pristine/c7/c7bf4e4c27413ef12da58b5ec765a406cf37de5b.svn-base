@@ -1,0 +1,19 @@
+package com.project.god.dao;
+
+import java.util.List;
+
+import com.project.god.domain.Admin;
+
+/**
+ * Admin DAO
+ * 
+ * @author god
+ *
+ */
+
+public interface AdminDAO {
+
+    List<Admin> getAdminList();
+    Admin getAdmin(int adminId);
+    
+}

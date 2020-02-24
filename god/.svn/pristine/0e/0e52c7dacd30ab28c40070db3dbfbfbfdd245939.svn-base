@@ -1,0 +1,43 @@
+package com.project.god.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.project.god.domain.FaqVO;
+
+public interface FaqMapper {
+	
+	void writeFaq(FaqVO faqVO);
+	
+	int getFaqNumByLastSeq(); // 마지막 시퀀스 리턴하는 메서드
+	
+	List<FaqVO> getArticleFaqList(@Param("page") int page, 
+								  @Param("rowsPerPage") int rowsPerPage);
+	
+	int getFaqListCount();
+	
+	FaqVO getFaq(int faq_id);
+	
+	void updateFaqReadCount(int faq_id);
+	
+	// 이전 게시글
+	int getPre(int faqId);
+	
+	// 다음 게시글
+	int getNext(int faqId);
+	
+	void updateFaq(FaqVO faqVO);
+	
+	void deleteFaq(int faqId);
+	
+	List<FaqVO> getFaqBySearch(@Param("searchDate") String searchDate,
+							   @Param("searchKind") String searchKind,
+							   @Param("searchWord") String searchWord,
+							   @Param("rowsPerPage") int rowsPerPage,
+							   @Param("page") int page);
+	
+	int getAllFaqsBySearch(@Param("searchDate") String searchDate,
+						   @Param("searchKind") String searchKind,
+			   			   @Param("searchWord") String searchWord);
+}

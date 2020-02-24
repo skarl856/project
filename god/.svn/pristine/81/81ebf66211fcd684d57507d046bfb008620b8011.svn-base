@@ -1,0 +1,24 @@
+package com.project.god.domain;
+
+import java.sql.Date;
+
+import lombok.Data;
+
+/**
+ * Order VO
+ * 
+ * @author god
+ *
+ */
+
+@Data
+public class OrderVO {
+
+	/** 주문번호 */
+	private int orderId;
+	/** 주문일 */
+	private Date orderDate;
+	/** 주문금액 */
+	private int orderPrice;
+	
+}

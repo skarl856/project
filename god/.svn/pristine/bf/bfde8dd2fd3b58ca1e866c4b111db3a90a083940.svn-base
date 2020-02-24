@@ -1,0 +1,72 @@
+package com.project.god.domain;
+
+
+
+import java.sql.Timestamp;
+
+import lombok.Data;
+
+/**
+ * OrderDetail VO
+ * 
+ * @author god
+ *
+ */
+
+@Data
+public class OrderDetailVO {
+	
+	/* order table */
+	/** 주문번호 */
+	private String orderId;
+	/** 회원아이디 */
+	private String memberId;
+	/** 주문 수령자 이름 */
+	private String orderName;
+	/** 주문 우편번호 */
+	private String orderZip;
+	/** 주문 기본주소 */
+	private String orderAddr;
+	/** 주문 상세주소 */
+	private String orderAddrDetail;
+	/** 주문 일반전화 */
+	private String orderPhone;
+	/** 주문 휴대전화 */
+	private String orderCellphone;
+	/** 주문 메세지 */
+	private String orderMsg;
+	/** 주문 금액 */
+	private int orderAmount;
+	/** 주문일 */
+	private Timestamp orderDate;
+	/** 주문상태 현황 */
+	private String orderDelivery;
+	
+	/* order_datail table */
+	/** 주문상세번호 */
+	private int orderDetailId;
+	/** 상품 번호 */
+	private int productId;
+	/** 주문 색상 */
+	private String cartColor;
+	/** 주문 사이즈 */
+	private String cartSize;
+	/** 주문 수량 */
+	private int cartQuan;
+	
+	/* product table */
+	/** 상품명 */
+	private String productName;
+	/** 상품 썸네일 이미지 */
+	private String productThumImg;
+	/** 상품 리스트 이미지 */
+	private String productListImg;
+	
+	
+	/* member table*/
+	/** 회원 이름 */
+	private String memberName;
+	/** 회원 휴대전화 */
+	private String memberCellphone;
+	
+}

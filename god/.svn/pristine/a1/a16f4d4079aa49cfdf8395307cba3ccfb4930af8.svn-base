@@ -1,0 +1,29 @@
+package com.project.god.admin.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * admin member list
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/admin")
+public class MemberListController {
+	
+	@RequestMapping("/admin_member_list.do")
+	public String member_list() {
+		
+		log.info("회원 리스트");
+		
+		return "/admin/admin_member_list";
+		
+	}
+
+}

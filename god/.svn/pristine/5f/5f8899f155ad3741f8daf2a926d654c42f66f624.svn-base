@@ -1,0 +1,75 @@
+package com.project.god.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.project.god.dao.CartDAO;
+import com.project.god.domain.CartListVO;
+import com.project.god.domain.CartVO;
+import com.project.god.service.CartService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@Slf4j
+public class CartServiceImpl implements CartService {
+	
+	@Autowired
+	private CartDAO cartDAO;
+	
+	// 카트에 담기
+	@Override
+	public void addCart(CartVO cartVO) {
+		
+		log.info("service addCart");
+		
+		cartDAO.addCart(cartVO);
+	}
+
+	// 카트 리스트
+	@Override
+	public List<CartListVO> cartList(String memberId) throws Exception {
+		
+		log.info("service cartList");
+		
+		return cartDAO.cartList(memberId);
+	}
+	
+	// 카트 삭제
+	@Override
+	public void deleteCart(int cartId) throws Exception {
+		
+		log.info("service deleteCart");
+		
+		cartDAO.deleteCart(cartId);
+	}
+	
+	// 카트 비우기
+	@Override
+	public void deleteAllCart(String memberId) throws Exception {
+		
+		log.info("service deleteAllCart");
+		
+		cartDAO.deleteAllCart(memberId);
+	}
+	
+	// 카트 수정
+	@Override
+	public void updateCart(CartVO cartVO) throws Exception {
+		
+		log.info("service updateCart");
+		
+		cartDAO.updateCart(cartVO);
+	}
+	
+	// 카트 금액 합계
+	@Override
+	public int cartSumPrice(String memberId) {
+		
+		log.info("service cartSumPrice");
+		
+		return cartDAO.cartSumPrice(memberId);
+	}
+}

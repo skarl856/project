@@ -1,0 +1,29 @@
+package com.project.god.admin.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * admin all mail
+ * 
+ * @author god
+ *
+ */
+
+@Controller
+@Slf4j
+@RequestMapping("/admin")
+public class AllMailController {
+	
+	@RequestMapping("/admin_all_mail.do")
+	public String banner() {
+		
+		log.info("대량 메일 발송");
+		
+		return "/admin/admin_all_mail";
+		
+	}
+
+}
